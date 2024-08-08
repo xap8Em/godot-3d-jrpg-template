@@ -1,1 +1,1 @@
-# Godot Template
+# Godot 3D JRPG Template
