@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "geequlim.godot-tools",
+    "eddiedover.gdscript-formatter-linter",
+    "dtoplak.vscode-glsllint",
+    "raczzalan.webgl-glsl-editor",
+    "rubbersheep.gi"
+  ]
+}
