@@ -4,8 +4,8 @@ extends RefCounted
 
 signal current_state_changed(current_state_name: StringName)
 
-var _state_map: Dictionary
 var _current_state: State
+var _state_map: Dictionary
 
 
 func _init(initial_state_name: StringName) -> void:
@@ -18,10 +18,6 @@ func input(event: InputEvent) -> void:
 	_current_state.input(event)
 
 
-func unhandled_input(event: InputEvent) -> void:
-	_current_state.unhandled_input(event)
-
-
 func physics_process(delta: float) -> void:
 	_current_state.physics_process(delta)
 
@@ -30,20 +26,16 @@ func process(delta: float) -> void:
 	_current_state.process(delta)
 
 
+func unhandled_input(event: InputEvent) -> void:
+	_current_state.unhandled_input(event)
+
+
 func _add_state(state_name: StringName, state: State) -> void:
 	assert(not _state_map.has(state_name))
 
 	state.exiting.connect(_change_current_state_to)
 
 	_state_map[state_name] = state
-
-
-func _get_state(state_name: StringName) -> State:
-	var state: State = _state_map.get(state_name)
-
-	assert(state)
-
-	return state
 
 
 func _change_current_state_to(next_state_name: StringName) -> void:
@@ -56,6 +48,14 @@ func _change_current_state_to(next_state_name: StringName) -> void:
 	current_state_changed.emit(_current_state.get_name())
 
 
+func _get_state(state_name: StringName) -> State:
+	var state: State = _state_map.get(state_name)
+
+	assert(state)
+
+	return state
+
+
 class State extends RefCounted:
 	signal exiting(next_state_name: StringName)
 
@@ -64,11 +64,11 @@ class State extends RefCounted:
 		pass
 
 
-	func input(_event: InputEvent) -> void:
+	func exit() -> void:
 		pass
 
 
-	func unhandled_input(_event: InputEvent) -> void:
+	func input(_event: InputEvent) -> void:
 		pass
 
 
@@ -80,5 +80,5 @@ class State extends RefCounted:
 		pass
 
 
-	func exit() -> void:
+	func unhandled_input(_event: InputEvent) -> void:
 		pass
