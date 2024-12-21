@@ -1,4 +1,4 @@
-extends State
+extends StateMachine.State
 
 
 var _main: Main
