@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtpr0k5dke42a"]
+
+[ext_resource type="Script" path="res://battlefields/battlefield.gd" id="1_dgs43"]
+
+[node name="Battlefield" type="Node3D"]
+script = ExtResource("1_dgs43")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
