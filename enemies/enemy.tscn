@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://clm4dcbqvwpm5"]
+
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_yxeu0"]
+
+[node name="Enemy" type="Node3D"]
+script = ExtResource("1_yxeu0")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
