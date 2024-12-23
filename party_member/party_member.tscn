@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://vvvksurg7s7v"]
+
+[ext_resource type="Script" path="res://party_member/party_member.gd" id="1_x4jj7"]
+
+[node name="PartyMember" type="Node3D"]
+script = ExtResource("1_x4jj7")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
