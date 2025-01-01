@@ -6,8 +6,8 @@ var _is_over: bool = false
 
 
 func _init() -> void:
-	_battlers.append(Battler.new("Ally", Statistics.new(100)))
-	_battlers.append(Battler.new("Enemy", Statistics.new(50)))
+	_battlers.append(Battler.new("Ally", Statistics.new(2, 2, 8)))
+	_battlers.append(Battler.new("Enemy", Statistics.new(1, 1, 4)))
 
 	for battler: Battler in _battlers:
 		battler.was_knocked_out.connect(_on_battler_was_knocked_out)
@@ -47,14 +47,16 @@ class Battler extends RefCounted:
 	func attack(target: Battler) -> void:
 		print(_display_name + " attacks " + target.get_display_name() + ".")
 
-		var damage: int = 10
+		var target_statistics: Statistics = target.get_statistics()
+
+		var target_defense: int = target_statistics.get_defense()
+		var damage: int = maxi(_statistics.get_attack() - target_defense, 0)
 
 		print(target.get_display_name() + " took " + str(damage) + " damage.")
 
-		var target_statistics: Statistics = target.get_statistics()
 		var target_hit_points: int = target_statistics.get_hit_points()
-		target_hit_points -= damage
-		target_statistics.set_hit_points(target_hit_points)
+
+		target_statistics.set_hit_points(target_hit_points - damage)
 
 
 	func get_display_name() -> String:

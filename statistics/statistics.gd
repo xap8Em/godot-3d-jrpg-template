@@ -4,13 +4,25 @@ extends RefCounted
 
 signal hit_points_depleted
 
+var _attack: int
+var _defense: int
 var _hit_points: int: set = set_hit_points
 var _max_hit_points: int
 
 
-func _init(max_hit_points: int) -> void:
-	_max_hit_points = max_hit_points
+func _init(attack: int, defense: int, max_hit_points: int) -> void:
+	_attack = maxi(attack, 0)
+	_defense = maxi(defense, 0)
+	_max_hit_points = maxi(max_hit_points, 1)
 	_hit_points = _max_hit_points
+
+
+func get_attack() -> int:
+	return _attack
+
+
+func get_defense() -> int:
+	return _defense
 
 
 func get_hit_points() -> int:
