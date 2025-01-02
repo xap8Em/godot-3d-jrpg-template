@@ -4,3 +4,19 @@
 
 [node name="Battle" type="Node"]
 script = ExtResource("1_kxcv0")
+
+[node name="MessageWindow" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="MessageWindow"]
+layout_mode = 2
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
