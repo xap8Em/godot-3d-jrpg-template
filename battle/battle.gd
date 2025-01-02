@@ -12,7 +12,7 @@ func _init() -> void:
 	for battler: Battler in _battlers:
 		battler.was_knocked_out.connect(_on_battler_was_knocked_out)
 
-	while not _is_over:
+	for i: int in 16:
 		_battlers[0].attack(_battlers[1])
 
 		if _is_over:
