@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b414nkqqkl6hw"]
+
+[ext_resource type="Script" path="res://dialog_window/dialog_window.gd" id="1_ne7xs"]
+
+[node name="DialogWindow" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ne7xs")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
