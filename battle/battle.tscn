@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cs8hjodkcxg0y"]
+[gd_scene load_steps=4 format=3 uid="uid://cs8hjodkcxg0y"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_kxcv0"]
 [ext_resource type="Script" path="res://battle/message_window.gd" id="2_3p0v8"]
+[ext_resource type="Script" path="res://battle/command_menu.gd" id="3_tj3pr"]
 
 [node name="Battle" type="Node"]
 script = ExtResource("1_kxcv0")
@@ -20,5 +21,23 @@ metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="MessageWindow"]
 layout_mode = 2
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CommandMenu" type="PanelContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_tj3pr")
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CommandMenu"]
+layout_mode = 2
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="AttackButton" type="Button" parent="CommandMenu/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true

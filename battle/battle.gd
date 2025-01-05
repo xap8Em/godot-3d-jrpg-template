@@ -1,17 +1,19 @@
 extends Node
 
 
+const CommandMenu = preload("res://battle/command_menu.gd")
 const MessageWindow = preload("res://battle/message_window.gd")
 
 var _battlers: Array[Battler] = []
 var _is_over: bool = false
 
+@onready var _command_menu: CommandMenu = $CommandMenu
 @onready var _message_window: MessageWindow = $MessageWindow
 
 
 func _ready() -> void:
-	_battlers.append(Battler.new("Ally", _message_window, Statistics.new(2, 2, 8)))
-	_battlers.append(Battler.new("Enemy", _message_window, Statistics.new(1, 1, 4)))
+	_battlers.append(Battler.new(_command_menu, "Ally", _message_window, Statistics.new(2, 2, 8)))
+	_battlers.append(Battler.new(_command_menu, "Enemy", _message_window, Statistics.new(1, 1, 4)))
 
 	for battler: Battler in _battlers:
 		battler.was_knocked_out.connect(_on_battler_was_knocked_out)
@@ -37,12 +39,14 @@ func _on_battler_was_knocked_out() -> void:
 class Battler extends RefCounted:
 	signal was_knocked_out
 
+	var _command_menu: CommandMenu
 	var _display_name: String
 	var _message_window: MessageWindow
 	var _statistics: Statistics
 
 
-	func _init(display_name: String, message_window: MessageWindow, statistics: Statistics) -> void:
+	func _init(command_menu: CommandMenu, display_name: String, message_window: MessageWindow, statistics: Statistics) -> void:
+		_command_menu = command_menu
 		_display_name = display_name
 		_message_window = message_window
 		_statistics = statistics
@@ -51,6 +55,11 @@ class Battler extends RefCounted:
 
 
 	func attack(target: Battler) -> void:
+		var command_index: int = await _command_menu.display_commands()
+
+		if command_index != 0:
+			return
+
 		await _message_window.display_message(_display_name + " attacks " + target.get_display_name() + ".")
 
 		var target_statistics: Statistics = target.get_statistics()
