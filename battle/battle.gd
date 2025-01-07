@@ -4,7 +4,6 @@ extends Node
 const CommandMenu = preload("res://battle/command_menu.gd")
 const MessageWindow = preload("res://battle/message_window.gd")
 
-var _battlers: Array[Battler] = []
 var _is_over: bool = false
 
 @onready var _command_menu: CommandMenu = $CommandMenu
@@ -12,28 +11,51 @@ var _is_over: bool = false
 
 
 func _ready() -> void:
-	_battlers.append(Battler.new(_command_menu, "Ally", _message_window, Statistics.new(2, 2, 8)))
-	_battlers.append(Battler.new(_command_menu, "Enemy", _message_window, Statistics.new(1, 1, 4)))
+	var battlers: Array[Battler] = []
 
-	for battler: Battler in _battlers:
+	battlers.append(Battler.new(_command_menu, "Ally", _message_window, Statistics.new(2, 2, 8)))
+	battlers.append(Battler.new(_command_menu, "Enemy", _message_window, Statistics.new(1, 1, 4)))
+
+	_begin(battlers)
+
+
+func _begin(battlers: Array[Battler]) -> void:
+	for battler: Battler in battlers:
 		battler.was_knocked_out.connect(_on_battler_was_knocked_out)
 
-	for i: int in 16:
-		await _battlers[0].attack(_battlers[1])
+	_proceed_with_round(battlers)
 
-		if _is_over:
-			break
 
-		await _battlers[1].attack(_battlers[0])
-
-		if _is_over:
-			break
-
+func _end() -> void:
 	await _message_window.display_message("The battle is over.")
+
+	get_tree().quit()
 
 
 func _on_battler_was_knocked_out() -> void:
 	_is_over = true
+
+
+func _proceed_with_round(battlers: Array[Battler]) -> void:
+	await _proceed_with_turn(battlers, 0)
+
+	_proceed_with_round(battlers)
+
+
+func _proceed_with_turn(battlers: Array[Battler], active_battler_index: int) -> void:
+	var target: Battler = battlers[active_battler_index - 1]
+
+	await battlers[active_battler_index].attack(target)
+
+	if _is_over:
+		_end()
+
+	active_battler_index += 1
+
+	if active_battler_index == battlers.size():
+		return
+
+	_proceed_with_turn(battlers, active_battler_index)
 
 
 class Battler extends RefCounted:
